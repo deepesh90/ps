@@ -19,18 +19,22 @@
                 <tbody>
                 <tr>
                   <th style="width: 10px">#</th>
-                  <th>Role Name</th>
-                  <th>Parent name</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>User Type</th>
+                  <th>Status</th>
                   <th style="width: 30%">Action</th>
                 </tr>
                 @php (($i=0))
                @foreach($data as $arr)
                                
                 <tr>
-                  <td>{{++$i}}</td>
-                  <td>{{$arr->name}}</td>
-                   <td>{{$arr->user_parent_name}}</td>
-                  
+                   <td>{{++$i}}</td>
+                   <td>{{$arr->name}}</td>
+                   <td>{{$arr->email}}</td>
+                   <td>{{$arr->user_permission}}</td>
+                                      <td>{{$arr->status}}</td>
+                                     
                   <td>
                   								                  										
 															<a class="btn btn-xs btn-info" href="{{url('user-type/edit/'.$arr->id)}}">
@@ -38,7 +42,7 @@
 															</a>
 
 															<a class="btn btn-xs btn-danger" onclick="return confirm('Are you sure you want to delete?')" href="{{url('user-type/delete/'.$arr->id.'/usertype/user-type')}}">
-																<i class="ace-icon fa fa-trash-o bigger-120"></i>
+																<i class="ace-icon fa fa-eye bigger-120"></i>
 															</a>
 
 															

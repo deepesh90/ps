@@ -66,6 +66,18 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'usertype_id' => $data['usertype_id'],
         ]);
+    }
+    
+    public function register(Request $request)
+    {
+    	$this->validator($request->all())->validate();
+    
+    	event(new Registered($user = $this->create($request->all())));
+    
+    
+    	return $this->registered($request, $user)
+    	?: redirect('user/');
     }
 }

@@ -4,8 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Usertype extends Model
+class Customer extends Model
 {
     //
-    public $timestamps=false;
+    public  $timestamps=false;
 }

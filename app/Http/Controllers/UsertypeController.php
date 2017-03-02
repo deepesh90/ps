@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Usertype;
-
+use DB;
 class UsertypeController extends Controller
 {
     //
@@ -20,56 +20,50 @@ class UsertypeController extends Controller
 	 */
 	public function index()
 	{
-		$data=Usertype::all()->toArray();
+		$data=DB::table('usertypes AS  u1')
+            ->leftJoin('usertypes AS  u2', 'u1.parent_id', '=', 'u2.id')
+            ->select('u1.*',DB::raw('IFNULL( u2.name ,\'Top Level\' ) as user_parent_name'))
+			->get();
+		
+		
+		Usertype::all();
 		return view('usertype/list',array('data'=>$data));
 	}
 	public function addusertype()
 	{
-		$usertype_type_array=usertype_array();
-		$res = Usertype::all()->get();
-		return view('usertype/add',array('res'=>$res));
+		$res = Usertype::all();
+		$select_data[]='Top Level';
+		foreach ($res as $arr)
+			$select_data[$arr->id]=$arr->name;
+		return view('usertype/add',array('select_data'=>$select_data));
 	}
 	public function edit($id)
 	{
-		$usertype_type_array=usertype_array();
-			$result = Usertype::find($id);
-		
-		return view('usertype/add',array('data'=>$usertype_type_array,'result'=>$result));
+		$result = Usertype::find($id);
+		$res = Usertype::all()->where('id', '<>',$id);
+		$select_data[]='Top Level';
+		foreach ($res as $arr)
+			$select_data[$arr->id]=$arr->name;
+		return view('usertype/add',array('select_data'=>$select_data,'result'=>$result));
 	}
-	public function saveusertype(Request $request)
+	public function saveRole(Request $request)
 	{
 		$post_array=$request->input();
 	
 		if ($request->input('record') != '') {
-			$data_to_save = Userusertype::find($request->input('record'));
-			if(is_null($data_to_save) || ($data_to_save->is_admin==1 && !is_admin()) || ($data_to_save->user_id!=Auth::user()->id && !is_admin()) ){
-				return redirect('access-is-denied');
-			}
+			$data_to_save = Usertype::find($request->input('record'));
+		
 				
 		} else {
-			$data_to_save = new Userusertype;
-			if((Auth::user()->is_admin) && Auth::user()->is_admin==1){
-	
-				$data_to_save->user_id = '';
-				$data_to_save->is_admin = 1;
-			}
-			else{
-				$data_to_save->user_id = Auth::user()->id;
-				$data_to_save->is_admin = 0;
-			}
+			$data_to_save = new Usertype;
+			
 		}
 	
-		$data_to_save->usertype_name = $request->input('usertype_name');
-		$permission=array();
-		$permission['permission']=[];
-		unset($post_array['record']);
-		unset($post_array['_token']);
-		unset($post_array['usertype_name']);
-		$permission['permission']=$post_array;
-		$data_to_save->permission = Json::encode($permission);
+		$data_to_save->name = $request->input('name');
+		$data_to_save->parent_id =$request->input('parent_id');
 	
 		$data_to_save->save();
-		return redirect('usertypes/detail/'.$data_to_save->id);
+		return redirect('user-type');
 	
 	}
 	
@@ -82,4 +76,13 @@ class UsertypeController extends Controller
 	
 		return view('usertype/add',array('data'=>$usertype_type_array,'result'=>$result));
 	}
+
+	public function delete($id, $table, $redirect_url) {
+		$className = 'App\\' . ucfirst($table);
+		$gstrone = new $className;
+		$del = $gstrone->find($id);
+		$del->delete();
+		return redirect($redirect_url);
+	}
+	
 }

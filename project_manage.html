@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>P3 | Admin</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/lc_switch.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/codemirror.css">
+    <link rel="stylesheet" href="css/custom.css">
+
+
+</head>
+
+<body class="fixed-sidebar">
+
+<div id="wrapper">
+
+<nav class="navbar-admin navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+
+      <ul side-navigation="" class="nav metismenu" id="side-menu">
+      <li class="nav-header" style="padding: 20px;">
+        <div class="profile-element">
+          <img height="60" width="100%" src="img/logo.svg" alt="P3" title="P3">
+        </div>
+        <div class="logo-element">
+          SS
+        </div>
+      </li>
+
+      <li class="active">
+        <a href="dashboard.html"><i class="fa fa-dashboard"></i> <span class="nav-label">Dashboard</span> </a>
+      </li>
+
+
+      <li ng-class="{active: m.reports}" >
+        <a href=""><i class="fa fa-file-pdf-o"></i> <span class="nav-label">Project</span><span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level collapse" ng-class="{in: m.reports}" aria-expanded="true">
+          <li  ><a href="#">Project Setup</a></li>
+          <li ><a  href="#">Customer Setup</a></li>
+          <li ><a  href="#">Assign project FTE</a></li>
+          <li ><a  href="#">Fixed Cost management</a></li>
+        </ul>
+      </li>
+
+      <li ng-class="{active: m.reports}" >
+        <a href=""><i class="fa fa-file-pdf-o"></i> <span class="nav-label">Reports</span><span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level collapse" ng-class="{in: m.reports}" aria-expanded="true">
+          <li  ><a href="#">Monthly PM report</a></li>
+          <li ><a  href="#">Bench Employee</a></li>
+          <li ><a  href="#">Department – Plan vs Forecast</a></li>
+          <li ><a  href="#">Department - PFO Plan vs forecast</a></li>
+          <li ><a  href="#">Project- Plan vs forecast</a></li>
+          <li ><a  href="#">Project – PFO vs fore cast</a></li>
+        </ul>
+      </li>
+
+      <li ng-class="{active: m.reports}" >
+        <a href=""><i class="fa fa-file-pdf-o"></i> <span class="nav-label">Finance</span><span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level collapse" ng-class="{in: m.reports}" aria-expanded="true">
+          <li  ><a href="#">Conversion rate</a></li>
+          <li ><a  href="#">Department setup</a></li>
+          <li ><a  href="#">Set report Date</a></li>
+          <li ><a  href="#">Employee setup</a></li>
+        </ul>
+      </li>
+
+      <li ng-class="{active: m.reports}" >
+        <a href=""><i class="fa fa-file-pdf-o"></i> <span class="nav-label">Administration</span><span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level collapse" ng-class="{in: m.reports}" aria-expanded="true">
+          <li  ><a href="#">Create Users</a></li>
+        </ul>
+      </li>
+
+    </ul>
+
+
+
+    </div>
+</nav>
+
+<div id="page-wrapper" class="gray-bg">
+<div class="row border-bottom">
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <a class="navbar-minimalize  minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+
+        </div>
+        <ul class="nav navbar-top-links navbar-right">
+          <li>
+            <div class="text-muted welcome-message">
+              <a ui-sref="main.profile" class="ng-binding"><span class="user-img"><img src="img/default-user-icon-profile.png" alt=""></span> Hi Jhone Doe</a>
+            </div>
+          </li>
+          <li>
+            <a href="login.html">
+              <i class="fa fa-sign-out"></i> Log out
+            </a>
+          </li>
+        </ul>
+
+    </nav>
+</div>
+
+<div class="row wrapper border-bottom white-bg page-heading ng-scope">
+  <div class="col-lg-10">
+    <h2>Manage Project</h2>
+  </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeIn ng-scope" ng-init="init()">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Manage Project</h5>
+        </div>
+        <div class="ibox-content">
+          <div class="row" ng-show="hasData" aria-hidden="false" style="">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th width="150">ID</th>
+                  <th>Project</th>
+                  <th>Customer</th>
+                  <th>PM</th>
+                  <th width="50"></th>
+                  <th width="50"></th>
+                  <th width="50"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="#">EMP1234RT</a></td>
+                  <td>Vision Soft </td>
+                  <td>Jhone Doe</td>
+                  <td>Clint</td>
+                  <td ><a href="project_setup.html"  class="btn btn-primary btn-xs">Update</a></td>
+                  <td ><a href="enter_cost.html" class="btn btn-primary btn-xs">Enter Cost</a></td>
+                  <td ><a href="#" class="btn btn-primary btn-xs">Forecast</a></td>
+                </tr>
+                <tr>
+                  <td><a href="#">EMP1234RT</a></td>
+                  <td>Vision Soft </td>
+                  <td>Jhone Doe</td>
+                  <td>Clint</td>
+                  <td ><a href="project_setup.html"  class="btn btn-primary btn-xs">Update</a></td>
+                  <td ><a href="enter_cost.html" class="btn btn-primary btn-xs">Enter Cost</a></td>
+                  <td ><a href="#" class="btn btn-primary btn-xs">Forecast</a></td>
+                </tr>
+                <tr>
+                  <td><a href="#">EMP1234RT</a></td>
+                  <td>Vision Soft </td>
+                  <td>Jhone Doe</td>
+                  <td>Clint</td>
+                  <td ><a href="project_setup.html"  class="btn btn-primary btn-xs">Update</a></td>
+                  <td ><a href="enter_cost.html" class="btn btn-primary btn-xs">Enter Cost</a></td>
+                  <td ><a href="#" class="btn btn-primary btn-xs">Forecast</a></td>
+                </tr>
+                <tr>
+                  <td><a href="#">EMP1234RT</a></td>
+                  <td>Vision Soft </td>
+                  <td>Jhone Doe</td>
+                  <td>Clint</td>
+                  <td ><a href="project_setup.html"  class="btn btn-primary btn-xs">Update</a></td>
+                  <td ><a href="enter_cost.html" class="btn btn-primary btn-xs">Enter Cost</a></td>
+                  <td ><a href="#" class="btn btn-primary btn-xs">Forecast</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
+<div class="footer" >
+
+    <div>
+        <strong>Copyright</strong> P3 &copy; 2015-2016
+    </div>
+</div>
+
+</div>
+</div>
+
+
+
+
+
+
+
+    <!-- Mainly scripts -->
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="js/inspinia.js"></script>
+    <script src="js/plugins/pace/pace.min.js"></script>
+
+    <script src="js/codemirror.js"></script>
+    <script src="js/codescript.js"></script>
+
+    <script>
+    $(document).ready(function(){
+
+
+        var textarea = document.getElementById("code1");
+
+        // Wait until animation finished render container
+        setTimeout(function(){
+
+            CodeMirror.fromTextArea(textarea, {
+                lineNumbers: true,
+                matchBrackets: true,
+                styleActiveLine: true
+            });
+        }, 500);
+
+    });
+</script>
+
+
+
+
+</body>
+
+</html>

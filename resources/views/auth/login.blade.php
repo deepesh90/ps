@@ -41,7 +41,8 @@
               <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
                 <div class="input-group">
                   <span class="input-group-addon rounded-left"><i class="fa fa-lock" aria-hidden="true"></i></span>
-                  <input type="password" class="form-control " placeholder="Password" >
+               <input id="password" placeholder="Password" type="password" class="form-control" name="password" required>
+        
                     @if ($errors->has('password'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>

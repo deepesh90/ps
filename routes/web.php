@@ -22,9 +22,28 @@ Route::group(['prefix' => '/user-type'], function(){
 	Route::get('/', 'UsertypeController@index');
 	Route::get('/add', 'UsertypeController@addUserType');
 	Route::post('/saveRole', 'UsertypeController@saveRole');
-	Route::get('/detail/{id}', 'UsertypeController@detail');
+	Route::get('/delete/{id}/{table}/{redirect_url}', 'UsertypeController@delete');
 	Route::get('/edit/{id}', 'UsertypeController@edit');
-	Route::get('/clone/{id}', 'UsertypeController@clone_role');
 	
 	
 });
+Route::group(['prefix' => '/user'], function(){
+	Route::get('/', 'UserController@index');
+	Route::get('/add', 'UserController@addUser');
+	Route::post('/save', 'UserController@save');
+});
+Route::group(['prefix' => '/customer'], function(){
+	Route::get('/', 'ProjectController@customer_list');
+	Route::get('/add', 'ProjectController@customer_add');
+	Route::post('/save', 'ProjectController@customer_save');
+	Route::get('/edit/{id}', 'ProjectController@customer_edit');
+	
+});
+Route::group(['prefix' => '/project'], function(){
+	Route::get('/', 'ProjectController@project_list');
+	Route::get('/add', 'ProjectController@project_add');
+	Route::post('/save', 'ProjectController@project_save');
+	Route::get('/edit/{id}', 'ProjectController@project_edit');
+	
+});
+

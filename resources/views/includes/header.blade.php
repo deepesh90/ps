@@ -5,9 +5,11 @@
 
         </div>
         <ul class="nav navbar-top-links navbar-right">
+                         @if (!Auth::guest())
+       
           <li>
             <div class="text-muted welcome-message">
-              <a ui-sref="main.profile" class="ng-binding"><span class="user-img"><img src="img/default-user-icon-profile.png" alt=""></span> Hi {{ Auth::user()->name }}</a>
+              <a ui-sref="main.profile" class="ng-binding"><span class="user-img"><img src="{{url('img/default-user-icon-profile.png')}}" alt=""></span> Hi {{ Auth::user()->name }}</a>
             </div>
           </li>
           <li>
@@ -22,6 +24,7 @@
                                             {{ csrf_field() }}
                                         </form>
           </li>
+          @endif
         </ul>
 
     </nav>
