@@ -16,7 +16,7 @@
     <link href="{{url('font-awesome/css/font-awesome.css')}}" rel="stylesheet">
     <link href="{{url('css/animate.css')}}" rel="stylesheet">
     <link href="{{url('css/style.css')}}" rel="stylesheet">
-    <link href="{{url('css/custom.css')}}" rel="stylesheet">
+    <link href="{{url('css/bootstrap-datetimepicker.css')}}" rel="stylesheet">
     <link href="{{url('css/lc_switch.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{url('css/codemirror.css')}}">
     <link rel="stylesheet" href="{{url('css/custom.css')}}">
@@ -49,6 +49,7 @@
 
     <!-- Scripts -->
         <script src="{{url('js/jquery-2.1.1.js')}}"></script>
+        
     <script src="{{url('js/bootstrap.min.js')}}"></script>
     <script src="{{url('js/plugins/metisMenu/jquery.metisMenu.js')}}"></script>
     <script src="{{url('js/plugins/slimscroll/jquery.slimscroll.min.js')}}"></script>
@@ -56,8 +57,22 @@
     <!-- Custom and plugin javascript -->
     <script src="{{url('js/inspinia.js')}}"></script>
     <script src="{{url('js/plugins/pace/pace.min.js')}}"></script>
-
+        <script src="{{url('js/jquery.form-validator.min.js')}}"></script>
+    
     <script src="{{url('js/codemirror.js')}}"></script>
     <script src="{{url('js/codescript.js')}}"></script>
+    <script src="{{url('js/moment-with-locales.js')}}"></script>
+    <script src="{{url('js/bootstrap-datetimepicker.js')}}"></script>
+    <script type="text/javascript">
+    $.validate();
+    
+    </script>
+    <script type="text/javascript">
+            $(function () {
+                $('.datepicker').datepicker({
+                	format: 'mm/dd/yyyy',
+                    });
+            });
+        </script>
 </body>
 </html>

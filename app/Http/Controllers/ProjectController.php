@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\Customer;
 use App\Project;
+use App\model\Country;
 
 class ProjectController extends Controller
 {
@@ -25,7 +26,11 @@ class ProjectController extends Controller
 	}
 	public function customer_add()
 	{
-		return view('Project/customer_add');
+		$country_arr=[];
+		$country=Country::all();
+		foreach ($country as $c)
+			$country_arr[$c->id]=$c->country_name;
+		return view('Project/customer_add',['country'=>$country_arr]);
 	}
 	public function customer_edit($id)
 	{

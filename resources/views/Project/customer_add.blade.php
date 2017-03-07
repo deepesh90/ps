@@ -33,12 +33,9 @@
                     </div>
                     <div class="col-md-4">
                          {{ Form::inputText('customer_name','Customer Name',isset($result['customer_name']) ? $result['customer_name'] :'')}}
-                      
                     </div>
                     <div class="col-md-4">
-                         {{ Form::inputText('website','Website Name',isset($result['website']) ? $result['website'] :'')}}
-                    
-                      
+                         {{ Form::inputText('website','Website Name',isset($result['website']) ? $result['website'] :'','',[])}}
                     </div>
                   </div>
 
@@ -62,12 +59,12 @@
 
                   <div class="row">
                     <div class="col-md-4">
-                    	  {{ Form::inputSelect('state_id','State',[''=>'--select--','1'=>'1','2'=>'2','3'=>'3'],[]) }}
+                    	  {{ Form::inputText('state_name','State','','') }}
                     
                       
                     </div>
                     <div class="col-md-4">
-                           {{ Form::inputSelect('country','Country',[''=>'--select--','1'=>'1','2'=>'2','3'=>'3'],[]) }}
+                           {{ Form::inputSelect('country','Country',$country,[]) }}
                     
                     
                     </div>

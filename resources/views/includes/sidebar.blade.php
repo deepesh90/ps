@@ -12,16 +12,17 @@
         </div>
       </li>
 
-      <li class="active">
-        <a href="dashboard.html"><i class="fa fa-dashboard"></i> <span class="nav-label">Dashboard</span> </a>
+      <li >
+        <a href="{{url('home')}}"><i class="fa fa-dashboard"></i> <span class="nav-label">Dashboard</span> </a>
       </li>
 
 
-      <li ng-class="{active: m.reports}" >
+      <li class="{{((isset($link) && ($link=='project'|| $link=='customer'|| $link=='assign_fte' || $link=='fixed_cost_management'))?'active':'')}}"  >
         <a href=""><i class="fa fa-file-pdf-o"></i> <span class="nav-label">Project</span><span class="fa arrow"></span></a>
         <ul class="nav nav-second-level collapse" ng-class="{in: m.reports}" aria-expanded="true">
+           <li ><a  href="{{url('customer')}}">Customer Setup</a></li>
+        
           <li  ><a href="{{url('project')}}">Project Setup</a></li>
-          <li ><a  href="{{url('customer')}}">Customer Setup</a></li>
           <li ><a  href="project_manage _fte.html">Assign project FTE</a></li>
           <li ><a  href="project_forecast.html">Fixed Cost management</a></li>
         </ul>
@@ -39,21 +40,21 @@
         </ul>
       </li>
 
-      <li ng-class="{active: m.reports}" >
+      <li  class="{{((isset($link) && ($link=='currency'|| $link=='department'|| $link=='employee'))?'active':'')}}" >
         <a href=""><i class="fa fa-file-pdf-o"></i> <span class="nav-label">Finance</span><span class="fa arrow"></span></a>
         <ul class="nav nav-second-level collapse" ng-class="{in: m.reports}" aria-expanded="true">
-          <li  ><a href="#">Conversion rate</a></li>
-          <li ><a  href="#">Department setup</a></li>
-          <li ><a  href="#">Set report Date</a></li>
-          <li ><a  href="#">Employee setup</a></li>
+          <li  class="{{((isset($link) && $link=='currency')?'active':'')}}"><a href="{{url('currency')}}">Conversion rate</a></li>
+          <li class="{{((isset($link) && $link=='department')?'active':'')}}"><a  href="#">Department setup</a></li>
+          <li class="{{((isset($link) && $link=='currency')?'active':'')}}"><a  href="#">Set report Date</a></li>
+          <li class="{{((isset($link) && $link=='employee')?'active':'')}}"><a  href="#">Employee setup</a></li>
         </ul>
       </li>
 
-      <li ng-class="{active: m.reports}" >
+      <li class="{{((isset($link) && ($link=='role'|| $link=='user'))?'active':'')}}" >
         <a href=""><i class="fa fa-file-pdf-o"></i> <span class="nav-label">Administration</span><span class="fa arrow"></span></a>
         <ul class="nav nav-second-level collapse" ng-class="{in: m.reports}" aria-expanded="true">
-         		  <li  ><a href="#">Users</a></li>
-                  <li  ><a href="{{url('user-type')}}">User Type</a></li>
+         		  <li  class="{{((isset($link) && $link=='user')?'active':'')}}">><a href="{{url('user')}}">Users</a></li>
+                  <li  class="{{((isset($link) && $link=='role')?'active':'')}}"><a href="{{url('roles')}}">Role</a></li>
          </ul>
       </li>
 

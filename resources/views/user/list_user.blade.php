@@ -1,4 +1,5 @@
 @extends('layouts.app')
+<?php $link='user'?>
 
 @section('content')
 <div class="row wrapper border-bottom white-bg page-heading ng-scope">
@@ -21,7 +22,7 @@
                   <th style="width: 10px">#</th>
                   <th>Name</th>
                   <th>Email</th>
-                  <th>User Type</th>
+                  <th>User Role</th>
                   <th>Status</th>
                   <th style="width: 30%">Action</th>
                 </tr>
@@ -32,18 +33,16 @@
                    <td>{{++$i}}</td>
                    <td>{{$arr->name}}</td>
                    <td>{{$arr->email}}</td>
-                   <td>{{$arr->user_permission}}</td>
+                   <td>{{$arr->role_name}}</td>
                                       <td>{{$arr->status}}</td>
                                      
                   <td>
                   								                  										
-															<a class="btn btn-xs btn-info" href="{{url('user-type/edit/'.$arr->id)}}">
+															<a class="btn btn-xs btn-info" href="{{url('user/edit/'.$arr->id)}}">
 																<i class="ace-icon fa fa-pencil bigger-120"></i>
 															</a>
 
-															<a class="btn btn-xs btn-danger" onclick="return confirm('Are you sure you want to delete?')" href="{{url('user-type/delete/'.$arr->id.'/usertype/user-type')}}">
-																<i class="ace-icon fa fa-eye bigger-120"></i>
-															</a>
+															
 
 															
                   </td>

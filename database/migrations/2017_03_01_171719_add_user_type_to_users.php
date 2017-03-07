@@ -15,7 +15,7 @@ class AddUserTypeToUsers extends Migration
     {
         //
     	Schema::table('users', function (Blueprint $table) {
-    		$table->integer('usertype_id');
+    		$table->integer('userrole_id');
     	});
     }
 

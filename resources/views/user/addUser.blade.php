@@ -21,11 +21,11 @@
         <div class="ibox-content">
                      <form class="form-horizontal" role="form" method="POST" action="{{ url('user/save') }}">
                         {{ csrf_field() }}
-
+						<input type="hidden" value="{{$record or ''}}" name="record">
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="name" class="">Name</label>
 
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+                                <input id="name" type="text" class="form-control" name="name" value="{{ $res->name or ''}}" required autofocus>
 
                                 @if ($errors->has('name'))
                                     <span class="help-block">
@@ -37,7 +37,7 @@
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email" class="">E-Mail Address</label>
 
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+                                <input id="email" type="email" class="form-control" name="email" value="{{ $res->email or ''}}" required>
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -49,7 +49,7 @@
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="">Password</label>
 
-                                <input id="password" type="password" class="form-control" name="password" required>
+                                <input id="password" type="password" class="form-control" name="password" >
 
                                 @if ($errors->has('password'))
                                     <span class="help-block">
@@ -58,14 +58,10 @@
                                 @endif
                         </div>
 
-                        <div class="form-group">
-                            <label for="password-confirm" class="">Confirm Password</label>
-
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                        </div>
-                         {{ Form::inputSelect('usertype_id','User Type',$select_data,isset($result['usertype_id']) ? $result['usertype_id'] :'') }}
+          
+                         {{ Form::inputSelect('userrole_id','User Role',$select_data,isset($res['userrole_id']) ? $res['userrole_id'] :'') }}
                         
-                         {{ Form::inputSelect('status','Status',['Active'=>'Active','Inactive'=>'Inactive'],isset($result['status']) ? $result['status'] :'') }}
+                         {{ Form::inputSelect('status','Status',['Active'=>'Active','Inactive'=>'Inactive'],isset($res['status']) ? $res['status'] :'') }}
                         
 
                                 <button type="submit" class="btn btn-primary">
