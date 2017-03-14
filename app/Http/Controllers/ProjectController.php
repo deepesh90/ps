@@ -104,11 +104,11 @@ class ProjectController extends Controller
 	
 		$data_to_save->project_name = $request->input('project_name');
 		$data_to_save->customer_id = $request->input('customer_id');
-		$data_to_save->start_date = $request->input('start_date');
-		$data_to_save->end_date = $request->input('end_date');
-		$data_to_save->project_manager_id	 = $request->input('pm');
+		$data_to_save->start_date = date('Y-m-d',strtotime($request->input('start_date')));
+		$data_to_save->end_date = date('Y-m-d',strtotime($request->input('end_date')));
+		$data_to_save->project_manager_id	 = $request->input('project_manager_id');
 		$data_to_save->save();
-		return redirect('customer');
+		return redirect('project');
 	
 	}
 }

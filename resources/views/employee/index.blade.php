@@ -43,7 +43,10 @@
 						                  <td>{{$arr->department_name}}</td>
 						                  
 						                                    <td>						
-						                  					                  										
+						
+																					<button class="btn btn-xs btn-warning"  onclick="loadAssignFTEModel('{{$arr->id}}')">
+																						<i class="ace-icon fa fa-desktop bigger-120"></i>
+																					</button>                  					                  										
 																					<a class="btn btn-xs btn-info" href="{{url('employee/edit/'.$arr->id)}}">
 																						<i class="ace-icon fa fa-pencil bigger-120"></i>
 																					</a>
@@ -51,7 +54,7 @@
 																					<button class="btn btn-xs btn-danger" onclick="if(confirm('Are you sure you want to delete?'))  $(this).closest('td').find('form').submit(); " >
 																						<i class="ace-icon fa fa-trash-o bigger-120"></i>
 																					</button>
-																					{{ Form::open(array('url' => 'delete','method'=>'delete')) }}
+																					 {{ Form::open(array('url' => 'delete','method'=>'delete')) }}
 																					 {{ Form::inputHidden('record','record',((isset($arr->id))?$arr->id:''),'',['placeholder'=>'Role Name']) }}
 																					 {{ Form::inputHidden('module','module','employee','',['placeholder'=>'Role Name']) }}
 																					 {{ Form::inputHidden('redir','redir','employee','department',['placeholder'=>'Role Name']) }}
@@ -82,4 +85,39 @@
 
 
 </div>
+@endsection
+@section('boot_css')
+ <link rel="stylesheet" href="{{url('js/jquery-ui.css')}}"> 
+@endsection
+@section('boot_js')
+  <script src="{{url('js/jquery-ui.js')}}"></script>
+
+
+@endsection
+@section('modals')
+
+<!-- Modal -->
+<div id="schedule_modal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+    	<img src="{{url('img/loader.gif')}}" />
+     </div>
+
+  </div>
+</div>
+
+@endsection
+@section('js')
+<script>
+function loadAssignFTEModel(employee_id)
+{
+	$("#schedule_modal").modal();
+	$.post("{{url('ajax/load_assign_fte')}}","employee_id="+employee_id+"&_token={{ csrf_token() }}").done(function(data){
+		$("#schedule_modal .modal-content").html(data);
+		
+		});
+}
+</script>
 @endsection

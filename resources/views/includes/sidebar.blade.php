@@ -23,8 +23,8 @@
            <li ><a  href="{{url('customer')}}">Customer Setup</a></li>
         
           <li  ><a href="{{url('project')}}">Project Setup</a></li>
-          <li ><a  href="project_manage _fte.html">Assign project FTE</a></li>
-          <li ><a  href="project_forecast.html">Fixed Cost management</a></li>
+          <li ><a  href="{{url('project_fte')}}">Assign project FTE</a></li>
+          <li ><a  href="{{url('fixed_cost')}}">Fixed Cost management</a></li>
         </ul>
       </li>
 
@@ -44,9 +44,11 @@
         <a href=""><i class="fa fa-file-pdf-o"></i> <span class="nav-label">Finance</span><span class="fa arrow"></span></a>
         <ul class="nav nav-second-level collapse" ng-class="{in: m.reports}" aria-expanded="true">
           <li  class="{{((isset($link) && $link=='currency')?'active':'')}}"><a href="{{url('currency')}}">Conversion rate</a></li>
-          <li class="{{((isset($link) && $link=='department')?'active':'')}}"><a  href="#">Department setup</a></li>
-          <li class="{{((isset($link) && $link=='currency')?'active':'')}}"><a  href="#">Set report Date</a></li>
-          <li class="{{((isset($link) && $link=='employee')?'active':'')}}"><a  href="#">Employee setup</a></li>
+          <li class="{{((isset($link) && $link=='department')?'active':'')}}"><a  href="{{url('department')}}">Department setup</a></li>
+          <li class="{{((isset($link) && $link=='currency')?'active':'')}}"><a  href="{{url('report_date')}}">Set report Date</a></li>
+          <li class="{{((isset($link) && $link=='employee')?'active':'')}}"><a  href="{{url('employee')}}">Employee setup</a></li>
+          <li  class="{{((isset($link) && $link=='employee-hierarchy')?'active':'')}}"><a href="{{url('employee-hierarchy')}}">Employee Hierarchy</a></li>
+          
         </ul>
       </li>
 

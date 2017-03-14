@@ -16,13 +16,16 @@
     <link href="{{url('font-awesome/css/font-awesome.css')}}" rel="stylesheet">
     <link href="{{url('css/animate.css')}}" rel="stylesheet">
     <link href="{{url('css/style.css')}}" rel="stylesheet">
-    <link href="{{url('css/bootstrap-datetimepicker.css')}}" rel="stylesheet">
+    <link href="{{url('css/bootstrap-datepicker.css')}}" rel="stylesheet">
+    @yield('boot_css')
     <link href="{{url('css/lc_switch.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{url('css/codemirror.css')}}">
     <link rel="stylesheet" href="{{url('css/custom.css')}}">
+    @yield('css')
     
     <!-- Scripts -->
     <script>
+    var base_url='{{url("/")}}';
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
         ]) !!};
@@ -53,7 +56,8 @@
     <script src="{{url('js/bootstrap.min.js')}}"></script>
     <script src="{{url('js/plugins/metisMenu/jquery.metisMenu.js')}}"></script>
     <script src="{{url('js/plugins/slimscroll/jquery.slimscroll.min.js')}}"></script>
-
+    @yield('boot_js')
+    
     <!-- Custom and plugin javascript -->
     <script src="{{url('js/inspinia.js')}}"></script>
     <script src="{{url('js/plugins/pace/pace.min.js')}}"></script>
@@ -62,7 +66,9 @@
     <script src="{{url('js/codemirror.js')}}"></script>
     <script src="{{url('js/codescript.js')}}"></script>
     <script src="{{url('js/moment-with-locales.js')}}"></script>
-    <script src="{{url('js/bootstrap-datetimepicker.js')}}"></script>
+    <script src="{{url('js/bootstrap-datepicker.js')}}"></script>
+    @yield('js')
+    
     <script type="text/javascript">
     $.validate();
     
@@ -74,5 +80,7 @@
                     });
             });
         </script>
+        
+@yield('modals')
 </body>
 </html>

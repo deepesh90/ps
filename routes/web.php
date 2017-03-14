@@ -18,6 +18,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+Route::get('/fixed_cost', function(){
+	return view('fixed');
+});
+
+
 Route::delete('/delete', 'DeleteController@delete');
 Route::group(['prefix' => '/user-type'], function(){
 	Route::get('/', 'UsertypeController@index');
@@ -46,6 +51,13 @@ Route::group(['prefix' => '/project'], function(){
 	Route::get('/add', 'ProjectController@project_add');
 	Route::post('/save', 'ProjectController@project_save');
 	Route::get('/edit/{id}', 'ProjectController@project_edit');
+	
+});
+Route::group(['prefix' => '/project_fte'], function(){
+	Route::get('/', 'Project_fteController@lists');
+	Route::get('/add', 'Project_fteController@add');
+	Route::post('/save', 'Project_fteController@save');
+	Route::get('/edit/{id}', 'Project_fteController@edit');
 	
 });
 
@@ -82,12 +94,31 @@ Route::group(['prefix' => '/employee'], function(){
 		Route::get('/edit/{id}', 'CurrencyController@edit');
 		Route::get('/add-rate/{id}', 'CurrencyController@add_currencyrate');
 	});
-
+		Route::group(['prefix' => '/ajax'], function(){
+			Route::get('/search_customer', 'AjaxController@search_customer');
+			Route::get('/search_manager', 'AjaxController@search_manager');
+			Route::get('/employee', 'AjaxController@search_employee');
+			Route::get('/list', 'AjaxController@list_module');
+			Route::post('/emp_detail', 'AjaxController@emp_detail');
+			Route::post('/load_assign_fte', 'AjaxController@load_assign_fte');
+			Route::get('/search_project', 'AjaxController@search_project');
+			Route::post('/save_fte', 'AjaxController@save_fte');
+			
+			
+		});
 		Route::group(['prefix' => '/department'], function(){
 			Route::get('/', 'DepartmentController@index');
 			Route::get('/add', 'DepartmentController@add');
 			Route::post('/save', 'DepartmentController@save');
-
 			Route::get('/edit/{id}', 'DepartmentController@edit');
 		});
-		
+
+			Route::group(['prefix' => '/employee-hierarchy'], function(){
+				Route::get('/', 'EmployeehierarchyController@index');
+				Route::get('/add', 'EmployeehierarchyController@add');
+				Route::post('/save', 'EmployeehierarchyController@save');
+				Route::get('/edit/{id}', 'EmployeehierarchyController@edit');
+				Route::get('/detail/{id}', 'EmployeehierarchyController@detail');
+			});
+			
+	
