@@ -124,11 +124,17 @@ class AjaxController extends Controller
 		if(is_null($rep_date)){
 			echo 'No Report Date Set as Active';exit;
 		}
-		return view('ajax/assign_fte',['employee'=>$data,'rep_date'=>$rep_date]);
+		$data1=project_fte::leftJoin('projects', 'projects.id', '=', 'projectftes.project_id')
+		->where('rep_id','=',$rep_date->id)
+		->where('employee_id','=',$input['employee_id'])
+		->select('projectftes.*','projects.project_name')
+		->get();
+		return view('ajax/assign_fte',['employee'=>$data,'rep_date'=>$rep_date,'data1'=>$data1]);
 	
 	}
 	public function save_fte(Request $request){
 		$input=$request->input();
+	
 		project_fte::where('employee_id','=',$input['employee_id'])->
 		where('rep_id','=',$input['rep_id'])->delete();
 		foreach($input['projects'] as $arr){
@@ -140,9 +146,9 @@ class AjaxController extends Controller
 			$data_to_save1->rep_id = $input['rep_id'];
 			$data_to_save1->project_location = $input['project_location'][$arr];
 			$data_to_save1->save();
-			echo 1;exit;
+			
 		}
-		
+		echo 1;exit;
 		
 	}
 }

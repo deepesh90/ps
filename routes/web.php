@@ -18,9 +18,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
-Route::get('/fixed_cost', function(){
-	return view('fixed');
-});
+Route::get('/fixed_cost', 'OtherexpensesController@index');
+
+
 
 
 Route::delete('/delete', 'DeleteController@delete');
@@ -60,6 +60,13 @@ Route::group(['prefix' => '/project_fte'], function(){
 	Route::get('/edit/{id}', 'Project_fteController@edit');
 	
 });
+Route::group(['prefix' => '/multi-project_fte'], function(){
+	Route::get('/', 'Multiproject_fteController@index');
+	Route::get('/add', 'Multiproject_fteController@add');
+	Route::post('/save', 'Multiproject_fteController@save');
+	Route::get('/edit/{id}', 'Multiproject_fteController@edit');
+	
+});
 
 Route::group(['prefix' => '/roles'], function(){
 	Route::get('/', 'RoleController@index');
@@ -84,41 +91,48 @@ Route::group(['prefix' => '/employee'], function(){
 	Route::get('/clone/{id}/{user_id}', 'RoleController@clone_role');
 });
 
-	Route::group(['prefix' => '/currency'], function(){
-		Route::get('/', 'CurrencyController@index');
-		Route::get('/add', 'CurrencyController@add');
-		Route::get('/add/{user_id}', 'CurrencyController@add');
-		Route::post('/save', 'CurrencyController@save');
-		Route::post('/save_rate', 'CurrencyController@save_rate');
-		Route::get('/detail/{id}', 'CurrencyController@detail');
-		Route::get('/edit/{id}', 'CurrencyController@edit');
-		Route::get('/add-rate/{id}', 'CurrencyController@add_currencyrate');
-	});
-		Route::group(['prefix' => '/ajax'], function(){
-			Route::get('/search_customer', 'AjaxController@search_customer');
-			Route::get('/search_manager', 'AjaxController@search_manager');
-			Route::get('/employee', 'AjaxController@search_employee');
-			Route::get('/list', 'AjaxController@list_module');
-			Route::post('/emp_detail', 'AjaxController@emp_detail');
-			Route::post('/load_assign_fte', 'AjaxController@load_assign_fte');
-			Route::get('/search_project', 'AjaxController@search_project');
-			Route::post('/save_fte', 'AjaxController@save_fte');
-			
-			
-		});
-		Route::group(['prefix' => '/department'], function(){
-			Route::get('/', 'DepartmentController@index');
-			Route::get('/add', 'DepartmentController@add');
-			Route::post('/save', 'DepartmentController@save');
-			Route::get('/edit/{id}', 'DepartmentController@edit');
-		});
+Route::group(['prefix' => '/currency'], function(){
+	Route::get('/', 'CurrencyController@index');
+	Route::get('/add', 'CurrencyController@add');
+	Route::get('/add/{user_id}', 'CurrencyController@add');
+	Route::post('/save', 'CurrencyController@save');
+	Route::post('/save_rate', 'CurrencyController@save_rate');
+	Route::get('/detail/{id}', 'CurrencyController@detail');
+	Route::get('/edit/{id}', 'CurrencyController@edit');
+	Route::get('/add-rate/{id}', 'CurrencyController@add_currencyrate');
+});
+Route::group(['prefix' => '/ajax'], function(){
+	Route::get('/search_customer', 'AjaxController@search_customer');
+	Route::get('/search_manager', 'AjaxController@search_manager');
+	Route::get('/employee', 'AjaxController@search_employee');
+	Route::get('/list', 'AjaxController@list_module');
+	Route::post('/emp_detail', 'AjaxController@emp_detail');
+	Route::post('/load_assign_fte', 'AjaxController@load_assign_fte');
+	Route::get('/search_project', 'AjaxController@search_project');
+	Route::post('/save_fte', 'AjaxController@save_fte');
+});
+Route::group(['prefix' => '/department'], function(){
+	Route::get('/', 'DepartmentController@index');
+	Route::get('/add', 'DepartmentController@add');
+	Route::post('/save', 'DepartmentController@save');
+	Route::get('/edit/{id}', 'DepartmentController@edit');
+});
 
-			Route::group(['prefix' => '/employee-hierarchy'], function(){
-				Route::get('/', 'EmployeehierarchyController@index');
-				Route::get('/add', 'EmployeehierarchyController@add');
-				Route::post('/save', 'EmployeehierarchyController@save');
-				Route::get('/edit/{id}', 'EmployeehierarchyController@edit');
-				Route::get('/detail/{id}', 'EmployeehierarchyController@detail');
-			});
-			
-	
+Route::group(['prefix' => '/employee-hierarchy'], function(){
+	Route::get('/', 'EmployeehierarchyController@index');
+	Route::get('/add', 'EmployeehierarchyController@add');
+	Route::post('/save', 'EmployeehierarchyController@save');
+	Route::get('/edit/{id}', 'EmployeehierarchyController@edit');
+	Route::get('/detail/{id}', 'EmployeehierarchyController@detail');
+});
+					
+
+Route::group(['prefix' => '/report_date'], function(){
+	Route::get('/', 'ReportdateController@lists');
+	Route::get('/add', 'ReportdateController@add');
+	Route::post('/save', 'ReportdateController@save');
+	Route::get('/edit/{id}', 'ReportdateController@edit');
+	Route::get('/detail/{id}', 'ReportdateController@detail');
+});
+		
+		

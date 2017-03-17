@@ -23,7 +23,10 @@
            <li ><a  href="{{url('customer')}}">Customer Setup</a></li>
         
           <li  ><a href="{{url('project')}}">Project Setup</a></li>
-          <li ><a  href="{{url('project_fte')}}">Assign project FTE</a></li>
+          <li ><a  href="{{url('project_fte')}}">Project FTE</a></li>
+          <li ><a  href="{{url('employee')}}">Assign Project FTE</a></li>
+          <li ><a  href="{{url('multi-project_fte')}}">Assign Bulk Project FTE</a></li>
+          
           <li ><a  href="{{url('fixed_cost')}}">Fixed Cost management</a></li>
         </ul>
       </li>

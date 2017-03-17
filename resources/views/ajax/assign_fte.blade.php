@@ -42,7 +42,34 @@
         						</tr>
         				</thead>
         				<tbody>
-        						<tr>
+        				@if(count($data1)>0)
+        				@php (($j=0))
+        					@foreach($data1 as $arr)
+        					<tr>
+        								<td>
+        								<input type="hidden" name="projects[]" class="form-control projects" value="{{$j}}" placeholder="Enter Project Name">
+        									<input type="text"  class="form-control project_name" name="project_name[{{$j}}]" value="{{$arr->project_name}}" placeholder="Enter Project Name">
+        							    	<input type="hidden" class="project_id" name="project_id[{{$j}}]" value="{{$arr->project_id}}" placeholder="Enter Project Name">
+        							    </td>
+        							    <td>
+        							    	<select class="form-control slecet-field" name="project_location[{{$j}}]">
+						                        <option value="Offshore" {{(($arr->project_location=='Offshore')?'selected':'')}}>Offshore</option>
+						                        <option value="Onsite-Biz" {{(($arr->project_location=='Onsite-Biz')?'selected':'')}}>Onsite-Biz</option>
+						                        <option value="Onsite-WP" {{(($arr->project_location=='Onsite-WP')?'selected':'')}}>Onsite-WP</option>
+						                      </select>
+        							    </td>
+        							    <td>
+        							    <input type="text" name="start_date[{{$j}}]" class="form-control datepicker" value="{{$arr->start_date->format('m/d/Y')}}">
+        							    </td>
+        							    <td>
+        							    <input type="text" name="end_date[{{$j}}]" class="form-control datepicker" value="{{$arr->end_date->format('m/d/Y')}}">
+        							    </td>
+        							    <td><a href="javascript:$(this).closest('tr').remove()">Delete</a></td>
+        						</tr>
+        						@php (($j++))
+        					@endforeach
+        				@else
+        					<tr>
         								<td>
         								<input type="hidden" name="projects[]" class="form-control projects" value="0" placeholder="Enter Project Name">
         									<input type="text"  class="form-control project_name" name="project_name[0]" value="" placeholder="Enter Project Name">
@@ -63,6 +90,8 @@
         							    </td>
         							    <td></td>
         						</tr>
+        				@endif	
+        					
         				</tbody>
         		</table>
         	</div>
@@ -74,7 +103,7 @@
       </div>
  {{ Form::close() }}
  <script>
- var i=1;
+ var i=$('table#emp_table tbody tr').length;
 function addrow(){
 $("table#emp_table tbody").append(''+
 		'<tr>'+

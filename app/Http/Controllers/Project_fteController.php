@@ -16,11 +16,11 @@ class Project_fteController extends Controller
 	public function lists()
 	{
 	
-		$data=project_fte::paginate(20)->all();
 		$data=project_fte::
 		leftJoin('employee', 'employee.id', '=', 'projectftes.employee_id')
 		->leftJoin('projects', 'projects.id', '=', 'projectftes.project_id')
-		->select('projectftes.*','project_name','employee.name as emp_name')->paginate(20);
+		->leftJoin('report_date', 'report_date.id', '=', 'projectftes.rep_id')
+		->select('projectftes.*','project_name','employee.name as emp_name','report_date.from_date','report_date.to_date')->paginate(20);
 		
 	
 		return view('projectfte/list',array('data'=>$data));
