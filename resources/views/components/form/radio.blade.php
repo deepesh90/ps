@@ -10,7 +10,7 @@
                     		$selected_value=true;
                     	}
                     ?>
-                     {{Form::radio($name, $key,$selected_value)}}
+                     {{Form::radio($name, $key,$selected_value,$attributes)}}
                       {{$val}}
                     </label>
                   </div>
@@ -20,7 +20,7 @@
  <div class="radio">
                     <label>
                     
-                     {{Form::radio($name, $key,$value)}}
+                     {{Form::radio($name, $key,$value,$attributes)}}
                       {{$val}}
                     </label>
                   </div>

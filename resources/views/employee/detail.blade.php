@@ -2,115 +2,175 @@
 
 
 @section('content')
-<section class="content">
-<div class="row">
-        <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Employees Detail</h3>
 
-              
-            </div>
-            <!-- /.box-header -->
-              <?php $permission=json_decode($detail->permission,true);
-              		$per_arr=[''=>'None','99'=>'Own Data','100'=>'All Data']
-              ?>	
-            <div class="box-body">
-					<div class="row">
-						<div class="col-sm-12">
-								@if($show_edit_button)
-								<a href="{{url('roles/edit/'.$detail->id)}}" class="btn btn-info">Edit</a>
-								@endif
-								@if($show_delete_button)
-								<a href="{{url('roles/delete/'.$detail->id)}}" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-info">Delete</a>
-								@endif
-								<a href="{{url('roles/clone/'.$detail->id)}}" class="btn btn-info">Clone</a>
-						</div>
-					</div>
-                             
-                             
-                    <dl class="dl-horizontal">
-               			 <dt>Role Name</dt>
-                			<dd>{{$detail->role_name}}</dd>
-                
-              		</dl>         
-           			<div class="table-responsive">
-					  <table class="table table-bordered">
-					  	<tr>
-					  		<th rowspan="2" width="20%">Name</th>
-					  		<th colspan="6">Action</th>
-					  	</tr>
-					  	<tr>
-					  		<th>View</th>
-					  		<th>Edit</th>
-					  		<th>Delete</th>
-					  		<th>Detail</th>
-					  		<th>Clone</th>
-					  		<th>Send GSTN</th>
-					  	</tr>
-					  	@if(isset($data['role_array']))
-					  		@foreach($data['role_array'] as $r_id=>$r_arr)
-					  										<tr>
-													  			<th colspan="7">	@if(isset($data['group_array'][$r_id])) 
-													  						{{$data['group_array'][$r_id]}}
-													  					@endif
-													  					</th>
-													  	
-													  		</tr>	
-					  								  		@foreach($r_arr as $role_key=>$role_val)
-					  			
-													  		<tr>
-														  		<td >{{$role_val}}</td>
-														  		<td>
-														  			@if(isset($permission['permission'][$role_key.'_view']))
-														  				{{$per_arr[$permission['permission'][$role_key.'_view']]}}
-														  			@else
-														  			@endif
-														  		</td>
-														  		<td>
-														  			@if(isset($permission['permission'][$role_key.'_edit']))
-														  				{{$per_arr[$permission['permission'][$role_key.'_edit']]}}
-														  			@else
-														  			@endif
-														  		</td>
-														  		<td>
-														  			@if(isset($permission['permission'][$role_key.'_delete']))
-														  				{{$per_arr[$permission['permission'][$role_key.'_delete']]}}
-														  			@else
-														  			@endif
-														  		</td>
-														  		<td>
-														  			@if(isset($permission['permission'][$role_key.'_detail']))
-														  				{{$per_arr[$permission['permission'][$role_key.'_detail']]}}
-														  			@else
-														  			@endif
-														  		</td>
-														  		<td>
-														  			@if(isset($permission['permission'][$role_key.'_clone']))
-														  				{{$per_arr[$permission['permission'][$role_key.'_clone']]}}
-														  			@else
-														  			@endif
-														  		</td>
-														  		<td>
-														  			@if(isset($permission['permission'][$role_key.'_send_gstn']))
-														  				{{$per_arr[$permission['permission'][$role_key.'_send_gstn']]}}
-														  			@else
-														  			@endif
-														  		</td>
-													  		</tr>
-					  										@endforeach
-					  				@endforeach
-						@endif
-					  </table>
-					</div>
-			
-                
-            </div>
+<div class="row wrapper border-bottom white-bg page-heading ng-scope">
+  <div class="col-lg-10">
+    <h2>Employee</h2>
+  </div>
+</div>
+<div class="wrapper wrapper-content animated fadeIn ng-scope" ng-init="init()">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-content">
+          <div class="row" ng-show="hasData" aria-hidden="false" style="">
+            <div class="col-md-12">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  Employee Detail
+                </div>
+                <div class="panel-body">
+						              	            <div class="row">
+	            		<div class="col-md-12">
+	            		      {{ Form::labelText([
+	            		      		'emp_name'=>$data->name,
+	            		      		'emp_code'=>$data->emp_id,
+	            		      		'department'=>$data->department_name,
+	            		      		'designation'=>$data->designation_name,
+	            		      		'date_of_joining'=>$data->date_of_joining,
+	            		      		'date_of_leaving'=>$data->date_of_leaving,
+	            		      ],'employee')}}
+	            		
+	            		</div>
+	            		
+	            		
+	            	</div>
 
-            <!-- /.box-body -->
+	
+
+                </div>
+                
+           
+              </div>
+
+            </div>
           </div>
-          <!-- /.box -->
         </div>
       </div>
-</section>
+      
+       <!-- /.box -->
+             <div class="ibox float-e-margins">
+        <div class="ibox-content">
+            <div class="box-header">
+              <h3 class="box-title">Expenses</h3>
+
+              <div class="box-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+ 					<a href="{{url('/emp_expense/add/'.$data->id)}}" class="btn btn-danger">Add Expenses</a>
+                 </div>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table class="table table-bordered table-hover datatable">
+              	<thead>
+              		<tr>
+              			<th>Salary</th>
+              			<th>Effective Date</th>
+              			<th></th>
+              		</tr>
+              		</thead>
+              		<tbody>
+              		@if(isset($emp_salary))
+              		@foreach($emp_salary as $user)
+              			<tr>
+              				<td>{{$emp_salary->salary}}</td>
+              				<td>{{$user->effective_date}}</td>
+              				<td>
+              						 @if($company_role->role_name=='Owner')                  										
+					            	 <a class="btn btn-xs btn-info" href="http://localhost/asp_new/public/roles/edit/1">
+																<i class="ace-icon fa fa-pencil bigger-120"></i>
+															</a>
+															<a class="btn btn-xs btn-danger" onclick="return confirm('Are you sure you want to delete?')" href="http://localhost/asp_new/public/roles/delete/1">
+																<i class="ace-icon fa fa-trash-o bigger-120"></i>
+															</a>
+					            	   @endif
+					 
+              				</td>
+              			</tr>
+              		@endforeach
+              		@endif
+              		</tbody>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+      </div>  
+      
+          <div class="ibox float-e-margins">
+        <div class="ibox-content">
+            <div class="box-header">
+              <h3 class="box-title">Salary</h3>
+
+              <div class="box-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+ 					<a href="{{url('/salary/add/'.$data->id)}}" class="btn btn-danger">Add Salary</a>
+                 </div>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table class="table table-bordered table-hover datatable">
+              	<thead>
+              		<tr>
+              			<th>Salary</th>
+              			<th>Effective date</th>
+              			<th></th>
+              		</tr>
+              		</thead>
+              		<tbody>
+              		@if(isset($all_user))
+              		@foreach($all_user as $user)
+              			<tr>
+              				<td>{{$user->name}}</td>
+              				<td>{{$user->email}}</td>
+              				<td>{{$user->role_name}}</td>
+              				<td>
+              						 @if($company_role->role_name=='Owner')                  										
+					            	 <a class="btn btn-xs btn-info" href="http://localhost/asp_new/public/roles/edit/1">
+																<i class="ace-icon fa fa-pencil bigger-120"></i>
+															</a>
+															<a class="btn btn-xs btn-danger" onclick="return confirm('Are you sure you want to delete?')" href="http://localhost/asp_new/public/roles/delete/1">
+																<i class="ace-icon fa fa-trash-o bigger-120"></i>
+															</a>
+					            	   @endif
+					 
+              				</td>
+              			</tr>
+              		@endforeach
+              		@endif
+              		</tbody>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+      </div>    
+      
+      
+    </div>
+  </div>
+
+
+</div>
+
+
+
+
+
 @endsection
+
+
+
+@section('boot_css')
+<link rel="stylesheet" href="{{url('js/plugins/DataTables/datatables.min.css')}}">
+@endsection
+@section('boot_js')
+    <script src="{{url('js/plugins/DataTables/datatables.min.js')}}"></script>
+
+@endsection
+@section('js')
+<script>
+$.noConflict();
+$(".datatable").DataTable();
+</script>
+ @endsection

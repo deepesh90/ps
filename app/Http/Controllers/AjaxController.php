@@ -9,6 +9,11 @@ use DB;
 use App\model\report_date;
 use App\Project;
 use App\project_fte;
+use App\model\allocation_pcrhead;
+use App\model\allocation_subhead;
+use App\model\allocationlist;
+use App\ProjectInputForecast;
+use App\ProjectInputActual;
 class AjaxController extends Controller
 {
     //
@@ -16,11 +21,118 @@ class AjaxController extends Controller
 	{
 		$this->middleware('auth');
 	}
+	
+public function getprojectyear(Request $request)
+	{
+		$input=$request->input();
+		$project_id=$input['project_id'];
+		$query=Project::where('id','=',$project_id	)->select('start_date')->first();
+		if(!isset($query->start_date))
+		{echo '';exit;}
+		else $year=date('Y',strtotime($query->start_date));
+
+		$current_year=date('Y');
+		if($current_year>=$year)
+		for($i=$current_year;$i>$year;$i--){
+			echo '<option value="'.$i.'">'.$i.'</option>';
+		}
+		exit;
+	}
+	
+
+	public function saveprojectyear(Request $request)
+	{
+		$input=$request->input();
+		$dom=dom_array();
+ 		ProjectInputForecast::where('project_id','=',$input['project_id'])->where('year','=',$input['year'])->delete();
+		
+		foreach ($input['cost_type'] as $arr){
+			foreach($dom['month_dom'] as $key1=>$arr1){
+				
+				$data_to_save=new ProjectInputForecast();
+				$data_to_save->name=$arr;
+				$data_to_save->value=(($input[$arr][$key1]!='')?$input[$arr][$key1]:0);
+				$data_to_save->month=$key1;
+				$data_to_save->year=$input['year'];
+				$data_to_save->project_id=$input['project_id'];
+				$data_to_save->save(); 
+			}
+		}
+		echo '1';
+		exit;
+	}
+
+	public function getprojecttable(Request $request){
+		$input=$request->input();
+	
+		$year=$input['year'];
+	
+		$project_id=$input['project_id'];
+		$query=ProjectInputForecast::where('project_id','=',$project_id)->where('year','=',$year)->get();
+		$data=array();
+		foreach($query as $arr){
+			$data[$arr->name][$arr->month]=$arr->value;
+		}
+		return view('ajax.project_table',['year'=>$year,'project_id'=>$project_id,'data'=>$data]);
+	}
+	public function getprojecttable_other(Request $request){
+		$input=$request->input();
+		
+		$month=$input['month'];
+		$rep_date=report_date::where('status','=','Active')->first();
+		
+		$project_id=$input['project_id'];
+		$query=ProjectInputActual::where('project_id','=',$project_id)->where([['year','=',$rep_date->from_date->format('Y')],['month','=',$month]])->get();
+		$data=array();
+		$year=$rep_date->from_date->format('Y');
+		foreach($query as $arr){
+			if($arr->type=='Cost')
+			$data[$arr->name]=$arr->value;
+			else
+				$data[$arr->name]=$arr->descripton;
+				
+		}
+		return view('ajax.project_table_other',['year'=>$year,'month'=>$month,'project_id'=>$project_id,'data'=>$data]);
+	}
+
+	public function getprojecttable_other_save(Request $request){
+		$input=$request->input();
+		$dom=dom_array();
+ 		ProjectInputActual::where('project_id','=',$input['project_id'])->where('year','=',$input['year'])->delete();
+
+ 		foreach ($input['cost_type'] as $arr){
+ 		
+ 			$data_to_save=new ProjectInputActual();
+ 			$data_to_save->name=$arr;
+ 			$data_to_save->value=(($input[$arr]!='')?$input[$arr]:0);
+ 			$data_to_save->month=$input['month'];
+ 			$data_to_save->year=$input['year'];
+ 			$data_to_save->project_id=$input['project_id'];
+ 			$data_to_save->type='Cost';
+ 			$data_to_save->descripton='';
+ 			$data_to_save->save();
+ 		}
+		foreach ($input['description'] as $arr){
+				
+				$data_to_save=new ProjectInputActual();
+				$data_to_save->name=$arr;
+				$data_to_save->value=0;
+				$data_to_save->month=$input['month'];
+				$data_to_save->year=$input['year'];
+				$data_to_save->project_id=$input['project_id'];
+				$data_to_save->type='Description';
+				$data_to_save->descripton=(($input[$arr]!='')?$input[$arr]:'');
+				$data_to_save->save(); 
+		}
+		echo '1';
+		exit;
+	}
+
 	public function search_customer(Request $request)
 	{
 		$input=$request->input();
-		 $data=Customer::where('customer_name','LIKE',"%$input[term]%")->limit(10)->get();
-		 
+		$data=Customer::where('customer_name','LIKE',"%$input[term]%")->limit(10)->get();
+			
 		$result=[];
 		$i=0;
 		foreach ($data as $arr){
@@ -29,9 +141,10 @@ class AjaxController extends Controller
 			$result[$i]['id']=$arr->id;
 			$i++;
 		}
-		
+	
 		echo json_encode($result);exit;
 	}
+
 	public function search_project(Request $request)
 	{
 		$input=$request->input();
@@ -77,8 +190,8 @@ class AjaxController extends Controller
 		$result=[];
 		$i=0;
 		foreach ($data as $arr){
-			$result[$i]['label']=$arr->name;
-			$result[$i]['value']=$arr->name;
+			$result[$i]['label']=$arr->name.' ('.$arr->emp_id.')';
+			$result[$i]['value']=$arr->name.'  ('.$arr->emp_id.')';
 			$result[$i]['id']=$arr->id;
 			$i++;
 		}
@@ -89,7 +202,7 @@ class AjaxController extends Controller
 	{
 		$input=$request->input();
 		
-		$test=		DB::table($input['module_name']);
+		$test=DB::table($input['module_name']);
 		$filter=[];
 		if(isset($input['filter']) && count($input['filter'])>0){
 			foreach ($input['filter'] as $key=>$value)
@@ -150,5 +263,39 @@ class AjaxController extends Controller
 		}
 		echo 1;exit;
 		
+	}
+	public function getSelectData(Request $request){
+		$input=$request->input();
+		switch($input['module']){
+			case 'allocation_subhead':
+				$data_arr=allocation_subhead::where('allocation_head_id','=',$input['allocation_head_id'])->where('allocation_subhead_status','=','Active')->orderby('allocation_subhead_name','ASC')->get();
+				$data[]='--Select--';
+				foreach ($data_arr as $arr)
+					$data[$arr->id]=$arr->allocation_subhead_name;
+						
+				break;
+
+
+			case 'allocation_pcrhead':
+				$data_arr=allocation_pcrhead::where('allocation_subhead_id','=',$input['allocation_subhead_id'])->where('allocation_pcr_status','=','Active')->orderby('allocation_pcr_name','ASC')->get();
+				$data[]='--Select--';
+				foreach ($data_arr as $arr)
+					$data[$arr->id]=$arr->allocation_pcr_name;
+					
+				break;
+				
+			case 'allocationlist':
+				$data_arr=allocationlist::where('allocation_pcrhead_id','=',$input['allocation_pcrhead_id'])->orderby('name','ASC')->get();
+				$data[]='--Select--';
+				foreach ($data_arr as $arr)
+					$data[$arr->id]=$arr->name;
+			
+				break;
+			
+		}
+		foreach ($data as $key=>$arr)
+			echo '<option value="'.$key.'">'.$arr.'</option>';
+		
+		exit;
 	}
 }

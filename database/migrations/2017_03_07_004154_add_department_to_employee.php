@@ -16,6 +16,9 @@ class AddDepartmentToEmployee extends Migration
         //
     	Schema::table('employee', function (Blueprint $table) {
     		$table->integer('department_id');
+    		$table->integer('designation');
+    		$table->date('date_of_joining');
+    		$table->date('date_of_leaving');
     	});
     }
 

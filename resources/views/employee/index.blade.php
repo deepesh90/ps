@@ -15,9 +15,6 @@
   <div class="row">
     <div class="col-md-12">
       <div class="ibox float-e-margins">
-        <div class="ibox-title">
-          <h5>Employee</h5>
-        </div>
         <div class="ibox-content">
           <div class="row" ng-show="hasData" aria-hidden="false" style="">
             <div class="col-md-12">
@@ -32,6 +29,7 @@
 						                  <th>Employee Name</th>
 		                                    <th>Employee Code</th>
 		                                    <th>Department</th>
+		                                    <th>Designation</th>
 		                                    <th  style="width: 30%">Action</th>
 						                </tr>
 						               <?php $i=0;?>
@@ -41,12 +39,16 @@
 						                  <td>{{$arr->name}}</td>
 						                  <td>{{$arr->emp_id}}</td>
 						                  <td>{{$arr->department_name}}</td>
-						                  
+						                  						                  <td>{{$arr->designation_name}}</td>
+						                  						                  
 						                                    <td>						
 						
 																					<button class="btn btn-xs btn-warning"  onclick="loadAssignFTEModel('{{$arr->id}}')">
 																						<i class="ace-icon fa fa-desktop bigger-120"></i>
-																					</button>                  					                  										
+																					</button>               
+																					<a class="btn btn-xs btn-warning"  href="{{url('employee/detail/'.$arr->id)}}">
+																						<i class="ace-icon fa fa-info bigger-120"></i>
+																					</a>       					                  										
 																					<a class="btn btn-xs btn-info" href="{{url('employee/edit/'.$arr->id)}}">
 																						<i class="ace-icon fa fa-pencil bigger-120"></i>
 																					</a>

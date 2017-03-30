@@ -35,11 +35,11 @@
                                      
                   <td>
                   								                  										
-															<a class="btn btn-xs btn-info" href="{{url('customer/edit/'.$arr->id)}}">
+															<a class="btn btn-xs btn-info" href="{{url('project/edit/'.$arr->id)}}">
 																<i class="ace-icon fa fa-pencil bigger-120"></i>
 															</a>
 
-															<a class="btn btn-xs btn-danger" onclick="return confirm('Are you sure you want to delete?')" href="{{url('user-type/delete/'.$arr->id.'/customer/customer')}}">
+															<a class="btn btn-xs btn-danger" onclick="return confirm('Are you sure you want to delete?')" href="{{url('user-type/delete/'.$arr->id.'/project/customer')}}">
 																<i class="ace-icon fa fa-trash bigger-120"></i>
 															</a>
 

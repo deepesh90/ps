@@ -67,6 +67,7 @@
     <script src="{{url('js/codescript.js')}}"></script>
     <script src="{{url('js/moment-with-locales.js')}}"></script>
     <script src="{{url('js/bootstrap-datepicker.js')}}"></script>
+    
     @yield('js')
     
     <script type="text/javascript">
